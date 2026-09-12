@@ -19,19 +19,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(() => {
     const saved = localStorage.getItem('nexaprep_user');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) { return null; }
+      try { 
+        const parsed = JSON.parse(saved);
+        if (parsed && parsed.email) return parsed;
+      } catch (e) { 
+        return null; 
+      }
     }
-    return { name: 'Ektha', email: 'ektham123@gmail.com' };
+    return null;
   });
 
   const login = (name: string, email: string) => {
-    const userObj = { name: name || 'Ektha', email: email || 'ektham123@gmail.com' };
+    const displayName = name.trim() || email.split('@')[0];
+    const userObj = { name: displayName, email: email.trim().toLowerCase() };
     setUser(userObj);
     localStorage.setItem('nexaprep_user', JSON.stringify(userObj));
   };
 
   const register = (name: string, email: string) => {
-    login(name, email);
+    const displayName = name.trim() || email.split('@')[0];
+    const userObj = { name: displayName, email: email.trim().toLowerCase() };
+    setUser(userObj);
+    localStorage.setItem('nexaprep_user', JSON.stringify(userObj));
   };
 
   const logout = () => {

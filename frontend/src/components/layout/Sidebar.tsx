@@ -83,11 +83,11 @@ export function Sidebar() {
       <div className="pt-4 border-t border-slate-800/80 space-y-3">
         <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-900/80 border border-slate-800/60">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-md">
-            {user?.name ? user.name.charAt(0).toUpperCase() : 'E'}
+            {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
           </div>
           <div className="flex flex-col overflow-hidden">
-            <span className="text-xs font-bold text-white truncate">{user?.name || 'Ektha'}</span>
-            <span className="text-[10px] text-slate-400 truncate">{user?.email || 'ektham123@gmail.com'}</span>
+            <span className="text-xs font-bold text-white truncate">{user?.name || 'User'}</span>
+            <span className="text-[10px] text-slate-400 truncate">{user?.email || 'user@example.com'}</span>
           </div>
         </div>
 

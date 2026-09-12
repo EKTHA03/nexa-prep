@@ -38,7 +38,7 @@ export function Home() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-950 to-indigo-950/60 p-6 rounded-3xl border border-slate-800 shadow-xl">
         <div>
           <h1 className="text-3xl font-black tracking-tight text-white flex items-center gap-2">
-            Hello, {user?.name || 'Ektha'}! 👋
+            Hello, {user?.name || 'Candidate'}! 👋
           </h1>
           <p className="text-xs text-slate-400 mt-1 font-medium">
             Here's your personalized career preparation overview.
