@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nexa Prep AI — Web Speech API Standalone Diagnostic Test</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; padding: 2rem; max-width: 600px; margin: 0 auto; }
+    button { background: #6366f1; color: white; border: none; padding: 0.75rem 1.5rem; font-weight: bold; border-radius: 0.5rem; cursor: pointer; }
+    button:hover { background: #4f46e5; }
+    .box { background: #1e293b; border: 1px solid #334155; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; min-height: 80px; }
+    .error { color: #f87171; background: #450a0a; border-color: #991b1b; }
+    .status { font-size: 0.875rem; color: #38bdf8; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h2>🎙️ Standalone STT Diagnostic Test</h2>
+  <p>Click "Start Recording" and speak into your microphone to test Web Speech API capability.</p>
+  
+  <button onclick="startRecognition()">Start Recording</button>
+  <button onclick="stopRecognition()" style="background:#ef4444; margin-left: 0.5rem;">Stop</button>
+  
+  <div id="status" class="status">Status: Idle</div>
+  <div id="out" class="box">Transcribed text will appear here...</div>
+  <div id="err" class="box error" style="display:none;"></div>
+
+  <script>
+    let rec = null;
+    function startRecognition() {
+      const SpeechReg = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechReg) {
+        document.getElementById('err').style.display = 'block';
+        document.getElementById('err').innerText = 'ERROR: Web Speech API is NOT supported in this browser. Please use Google Chrome or Microsoft Edge.';
+        return;
+      }
+      rec = new SpeechReg();
+      rec.continuous = true;
+      rec.interimResults = true;
+      rec.lang = 'en-US';
+
+      document.getElementById('status').innerText = 'Status: Listening... Speak now!';
+      document.getElementById('err').style.display = 'none';
+
+      rec.onresult = (e) => {
+        const text = Array.from(e.results).map(r => r[0].transcript).join(' ');
+        console.log('[STT Result]:', text);
+        document.getElementById('out').innerText = text;
+      };
+
+      rec.onerror = (e) => {
+        console.error('STT ERROR:', e.error);
+        document.getElementById('err').style.display = 'block';
+        let detail = e.error;
+        if (e.error === 'network') detail = 'NETWORK ERROR: Web Speech API requires active internet connection to contact Google servers.';
+        if (e.error === 'not-allowed') detail = 'PERMISSION ERROR: Microphone access denied in browser settings.';
+        if (e.error === 'no-speech') detail = 'NO SPEECH: No audio detected by microphone.';
+        document.getElementById('err').innerText = 'STT Error Code [' + e.error + ']: ' + detail;
+      };
+
+      rec.onend = () => {
+        document.getElementById('status').innerText = 'Status: Recognition ended.';
+      };
+
+      try {
+        rec.start();
+      } catch (err) {
+        console.error('Start error:', err);
+      }
+    }
+
+    function stopRecognition() {
+      if (rec) rec.stop();
+      document.getElementById('status').innerText = 'Status: Stopped.';
+    }
+  </script>
+</body>
+</html>

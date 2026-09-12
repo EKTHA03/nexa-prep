@@ -1,0 +1,5 @@
+@media (max-width: 640px) {
+  .glass-card {
+    padding: 1rem !important;
+  }
+}

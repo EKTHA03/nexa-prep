@@ -1,0 +1,9 @@
+{
+  "short_name": "NEXA PREP",
+  "name": "NEXA PREP AI Career Simulation",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#6366F1",
+  "background_color": "#0F172A"
+}

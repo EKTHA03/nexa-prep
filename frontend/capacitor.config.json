@@ -1,0 +1,10 @@
+{
+  "appId": "com.nexaprep.app",
+  "appName": "Nexa Prep AI",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  }
+}
